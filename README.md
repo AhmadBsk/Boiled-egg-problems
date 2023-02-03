@@ -13,7 +13,8 @@ ylabel('time');
 
 ![image](https://user-images.githubusercontent.com/123794462/216533172-c1cae113-a541-4fa0-8a9e-2860e3b2ed9f.png)
 
-`%Linear Discriminant Analysis (LDA)
+```
+%Linear Discriminant Analysis (LDA)
 lda = fitcdiscr(data(:,2:3),data(:,4));
 ldaClass = resubPredict(lda);
  
@@ -31,10 +32,12 @@ x = x(:);
 y = y(:);
 j = classify([x y],data(:,2:3),data(:,4));
 gscatter(x,y,j,'rgb','osd')
+```
 
 ![image](https://user-images.githubusercontent.com/123794462/216533268-bf14cfb1-8169-4261-9a5c-0c162ba67daa.png)
 
-`%Quadratic Discriminant Analysis (QDA) 
+```
+%Quadratic Discriminant Analysis (QDA) 
 qda = fitcdiscr(data(:,2:3), data(:,4),'DiscrimType','quadratic');
  
 %QDA resubstitution error
@@ -64,6 +67,75 @@ nbGauCVErr = kfoldLoss(nbGauCV) %nbGauCVErr =0.0918
  
 figure(3)
 labels = predict(nbGau, [x y]);
-gscatter(x,y,labels,'rgb','osd')`
+gscatter(x,y,labels,'rgb','osd')
+```
+
+![image](https://user-images.githubusercontent.com/123794462/216534733-f386a5e6-ff51-485c-957b-72f266cad43c.png)
+
+```
+% using a kernel density estimation
+nbKD = fitcnb(data(:,2:3), data(:,4), 'DistributionNames','kernel', 'Kernel','box');
+nbKDResubErr = resubLoss(nbKD)  %nbKDResubErr =0.0918
+nbKDCV = crossval(nbKD, 'CVPartition',cp);
+nbKDCVErr = kfoldLoss(nbKDCV)   %nbKDCVErr =0.0938
+figure(4)
+labels = predict(nbKD, [x y]);
+gscatter(x,y,labels,'rgb','osd')
+```
+
+![image](https://user-images.githubusercontent.com/123794462/216534855-beb428ba-327b-409e-9c8e-c5ba277329ac.png)
+
+```
+%Decision Tree
+t = fitctree(data(:,2:3),data(:,4),'PredictorNames',{'W' 'T' });
+[grpname,node] = predict(t,[x y]);
+ 
+figure(5)
+gscatter(x,y,grpname,'grb','sod')
+view(t,'Mode','graph');
+```
+
+![image](https://user-images.githubusercontent.com/123794462/216534944-af35558b-cafc-4d9d-855b-5bd3c6519eca.png)
+
+```
+dtResubErr = resubLoss(t)   %dtResubErr =0.0399
+ 
+cvt = crossval(t,'CVPartition',cp);
+dtCVErr = kfoldLoss(cvt)    %dtCVErr =0.0958
+ 
+resubcost = resubLoss(t,'Subtrees','all');
+[cost,secost,ntermnodes,bestlevel] = cvloss(t,'Subtrees','all');
+plot(ntermnodes,cost,'b-', ntermnodes,resubcost,'r--')
+figure(gcf);
+xlabel('Number of terminal nodes');
+ylabel('Cost (misclassification error)')
+legend('Cross-validation','Resubstitution')
+```
+
+![image](https://user-images.githubusercontent.com/123794462/216535080-a528d3c6-9a99-4212-b7d3-3757a7493f58.png)
+
+```
+% "best" tree level with minimum cost plus one standard error
+[mincost,minloc] = min(cost);
+cutoff = mincost + secost(minloc);
+hold on
+plot([0 20], [cutoff cutoff], 'k:')
+plot(ntermnodes(bestlevel+1), cost(bestlevel+1), 'mo')
+legend('Cross-validation','Resubstitution','Min + 1 std. err.','Best choice')
+hold off
+```
+
+![image](https://user-images.githubusercontent.com/123794462/216535205-fe53999e-f9f2-4a01-b4ad-074018f1d631.png)
+
+```
+% pruned tree
+pt = prune(t,'Level',bestlevel);
+view(pt,'Mode','graph')
+cost(bestlevel+1)   %cost=0.1018
+```
+*Comparison of error rates in different methods*
+
+![image](https://user-images.githubusercontent.com/123794462/216535703-73fc2d2d-cea3-4e4d-a9d5-8222bf1e42ed.png)
+
 
 
