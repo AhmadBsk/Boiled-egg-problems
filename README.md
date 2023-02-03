@@ -2,15 +2,12 @@
 Boiled egg problems  (Solve with LDA, QDA, Naive Bayes Classifiers, decision tree, pruned decision tree)
 
 
-`clear ; close all; clc`
- 
+```clear ; close all; clc 
 [data,txt] = xlsread('train.xlsx');
- 
- 
 f = figure(1);
 gscatter(data(:,2), data(:,3), data(:,4),'rgb','osd');
 xlabel('weight');
-ylabel('time');`
+ylabel('time');```
 
 ![image](https://user-images.githubusercontent.com/123794462/216533172-c1cae113-a541-4fa0-8a9e-2860e3b2ed9f.png)
 
@@ -31,7 +28,7 @@ figure(2)
 x = x(:);
 y = y(:);
 j = classify([x y],data(:,2:3),data(:,4));
-gscatter(x,y,j,'rgb','osd')`
+gscatter(x,y,j,'rgb','osd')
 
 ![image](https://user-images.githubusercontent.com/123794462/216533268-bf14cfb1-8169-4261-9a5c-0c162ba67daa.png)
 
