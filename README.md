@@ -1,3 +1,7 @@
+author: AhmadReza Boskabadi 
+date: 19 Feb 2021 
+Email: ahmadreza.boskabadi@gmail.com
+
 # Boiled-egg-problems
 Boiled egg problems  (Solve with LDA, QDA, Naive Bayes Classifiers, decision tree, pruned decision tree)
 
@@ -135,7 +139,8 @@ cost(bestlevel+1)   %cost=0.1018
 ```
 *Comparison of error rates in different methods*
 
-![image](https://user-images.githubusercontent.com/123794462/216535703-73fc2d2d-cea3-4e4d-a9d5-8222bf1e42ed.png)
+![image](https://user-images.githubusercontent.com/123794462/216536208-6a9a4a48-3f94-4721-adc4-55c494bf35c2.png)
 
-
-
+author: AhmadReza Boskabadi 
+date: 19 Feb 2021 
+Email: ahmadreza.boskabadi@gmail.com
