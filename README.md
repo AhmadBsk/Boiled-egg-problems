@@ -2,7 +2,7 @@
 Boiled egg problems  (Solve with LDA, QDA, Naive Bayes Classifiers, decision tree, pruned decision tree)
 
 
-`clear ; close all; clc
+`clear ; close all; clc`
  
 [data,txt] = xlsread('train.xlsx');
  
