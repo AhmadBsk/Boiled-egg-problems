@@ -4,9 +4,10 @@ Email: ahmadreza.boskabadi@gmail.com
 
 # Boiled-egg-problems
 Boiled egg problems  (Solve with LDA, QDA, Naive Bayes Classifiers, decision tree, pruned decision tree)
-
+* written in  MATLAB®*
 
 ```
+
 clear ; close all; clc 
 [data,txt] = xlsread('train.xlsx');
 f = figure(1);
